@@ -1,25 +1,37 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Login from "../views/Login.vue" 
+import MainBox from "../views/MainBox.vue"
+import Home from "../views/home/Home.vue"
+import Center from "../views/center/Center.vue"
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path:"/login",
+    name:"login",
+    component:Login
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path:"/mainbox",
+    name:'mainbox',
+    component:MainBox
   }
+  //mainbox的嵌套路由，后面根据权限动态添加
+ 
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+
+router.addRoute("mainbox",{
+  path:"/index",
+  component:Home
+}) 
+router.addRoute("mainbox",{
+  path:"/center",
+  component:Center
+}) 
+
 
 export default router
