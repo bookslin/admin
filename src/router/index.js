@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Login from "../views/Login.vue" 
 import MainBox from "../views/MainBox.vue"
-import Home from "../views/home/Home.vue"
-import Center from "../views/center/Center.vue"
+import RoutesConfig from './config'
+import store from '@/store'
 
 const routes = [
   {
@@ -24,14 +24,40 @@ const router = createRouter({
   routes
 })
 
-router.addRoute("mainbox",{
-  path:"/index",
-  component:Home
-}) 
-router.addRoute("mainbox",{
-  path:"/center",
-  component:Center
-}) 
+//每次路由跳转之前
+router.beforeEach((to,from,next) => {
+  if(to.name === "login") {
+    next()
+  }else{
+    //如果授权，next()
+    //未授权，重定向login
+    if (!localStorage.getItem("token")) {
+      next({
+        path:"/login"
+      })
+    }else{
+      if (!store.state.isGetterRouter) {
+        ConfigRouter()
+        next({
+          path:to.fullPath
+        })
+      }else{
+        next()
+      }
+     
+    }
+  }
+})
+
+const ConfigRouter = () => {
+  RoutesConfig.forEach(item =>{
+    router.addRoute("mainbox",item)
+  })
+
+//改变isGetterRouter = true
+store.commit("changeGetterRouter",true)
+
+}
 
 
 export default router
