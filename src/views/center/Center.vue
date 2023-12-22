@@ -1,5 +1,5 @@
 <template>
     <div>
-        center2222222
+        center
     </div>
 </template>
