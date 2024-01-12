@@ -139,8 +139,8 @@ const options2 = {
 </script>
 <style lang="scss" scoped> 
 .form-box{
-    width: 500px;
-    height: 300px;
+    width: 450px;
+    height: 220px;
     position: fixed;
     left: 50%;
     top: 50%;
@@ -148,7 +148,7 @@ const options2 = {
     background: rgba($color: #42464a, $alpha: 0.5);
     color: white;
     text-align: center;
-    padding: 20px;
+    padding: 50px 30px;
     h3{
         font-size: 30px;
     }
