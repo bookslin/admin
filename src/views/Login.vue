@@ -29,6 +29,8 @@
 import { loadFull } from "tsparticles";
 import { reactive,ref } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage } from 'element-plus'
+import axios from "axios"
 
 
 const loginForm = reactive({
@@ -59,9 +61,14 @@ const submitForm = ()=> {
     loginFormRef.value.validate((valid)=>{
         console.log(valid);
         if(valid) {
-            console.log(loginForm)
-            localStorage.setItem("token","booklin")
-            router.push("/index")
+            axios.post("/adminapi/user/login",loginForm).then(res=>{
+                console.log(res.data);
+                if(res.data.ActionType==="OK") {
+                    router.push("/index") 
+                } else{
+                ElMessage.error('用户名和密码不匹配')
+                 }
+            })
         }
 
     })
