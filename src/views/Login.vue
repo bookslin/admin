@@ -31,7 +31,8 @@ import { reactive,ref } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus'
 import axios from "axios"
-
+import { useStore } from "vuex";
+const store = useStore()
 
 const loginForm = reactive({
     username:"",
@@ -64,6 +65,8 @@ const submitForm = ()=> {
             axios.post("/adminapi/user/login",loginForm).then(res=>{
                 console.log(res.data);
                 if(res.data.ActionType==="OK") {
+                    // console.log(res.data.data);
+                    store.commit("changeUserInfo",res.data.data)
                     router.push("/index") 
                 } else{
                 ElMessage.error('用户名和密码不匹配')
