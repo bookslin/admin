@@ -17,6 +17,7 @@ export default createStore({
     changeCollapsed(state) {
       state.isCollapse = !state.isCollapse
     },
+    //修改用户信息
     changeUserInfo(state,value){
       state.userInfo = {
         ...state.userInfo,
