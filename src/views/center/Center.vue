@@ -42,14 +42,7 @@
                     <el-form ref="userFormRef" :model="userForm" :rules="userFormRules" label-width="120px"
                         class="demo-ruleForm">
                         <el-form-item label="头像" prop="avatar">
-                            <el-upload class="avatar-uploader"
-                                action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-                                :show-file-list="false" :auto-upload="false" :on-change="handleChange">
-                                <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
-                                <el-icon v-else class="avatar-uploader-icon">
-                                    <Plus />
-                                </el-icon>
-                            </el-upload>
+                          <Upload :avatar="userForm.avatar" @bookchange="handleChange"></Upload>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary" @click="submitForm()">更新</el-button>
@@ -63,11 +56,13 @@
 <script setup>
 import { useStore } from "vuex"
 import { computed, ref, reactive } from "vue"
-import { Plus } from "@element-plus/icons-vue";
-import axios from "axios";
+import { ElMessage } from "element-plus";
+import upload from "@/util/upload";
+import Upload from "@/components/upload/Upload"
 const store = useStore()
 
-const avatarUrl = computed(() => store.state.userInfo.avatar ? store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`)
+const avatarUrl = computed(() => store.state.userInfo.avatar ? 'http://localhost:3000' + store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`)
+
 const { username, gender, introduction, avatar, } = store.state.userInfo
 const userFormRef = ref()
 const userForm = reactive({
@@ -75,7 +70,7 @@ const userForm = reactive({
     gender,
     introduction,
     avatar,
-    file:null
+    file: null
 })
 
 const userFormRules = reactive({
@@ -100,30 +95,21 @@ const options = [
 ]
 
 //选择完图片后回调
-const handleChange = (file) => {
-    userForm.avatar = URL.createObjectURL(file.raw)
-    userForm.file= file.raw
+const handleChange = file => {
+    userForm.avatar = URL.createObjectURL(file);
+    userForm.file = file;
 }
+
 //更新提交
 const submitForm = () => {
-    userFormRef.value.validate ((valid)=>{
-        if(valid) {
+    userFormRef.value.validate(async (valid) => {
+        if (valid) {
             // console.log("submit",userForm);
-            const params = new FormData()
-            for (let i in userForm){
-                params.append(i,userForm[i])
+            const res = await upload("/adminapi/user/upload", userForm)
+            if (res.ActionType === "OK") {
+                store.commit("changeUserInfo", res.data)
+                ElMessage.success("更新成功")
             }
-            axios.post("adminapi/user/upload",params,{
-                headers:{
-                    "Content-Type":"multipart/form-data"
-                }
-            }).then(res=>{
-                console.log(res.data);
-
-                // if(res.data.ActionType === 'OK'){
-                //     store.commit("changeUserInfo",res.data)
-                // }
-            })
         }
     })
 }
