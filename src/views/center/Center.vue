@@ -92,7 +92,7 @@ const handleChange = file => {
     userForm.avatar = URL.createObjectURL(file);
     userForm.file = file;
 }
-//1111111111111111
+//22222222222
 //更新提交
 const submitForm = () => {
     userFormRef.value.validate(async (valid) => {
