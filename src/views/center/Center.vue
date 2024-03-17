@@ -21,29 +21,22 @@
                         <el-form-item label="用户名" prop="username">
                             <el-input v-model="userForm.username" />
                         </el-form-item>
-                    </el-form>
-                    <el-form ref="userFormRef" :model="userForm" :rules="userFormRules" label-width="120px"
-                        class="demo-ruleForm">
+
                         <el-form-item label="性别" prop="gender">
                             <el-select v-model="userForm.gender" class="m-2" placeholder="Select" style="width: 100%;">
                                 <el-option v-for="item in options" :key="item.value" :label="item.label"
                                     :value="item.value" />
                             </el-select>
                         </el-form-item>
-                    </el-form>
 
-                    <el-form ref="userFormRef" :model="userForm" :rules="userFormRules" label-width="120px"
-                        class="demo-ruleForm">
                         <el-form-item label="个人简介" prop="introduction">
                             <el-input v-model="userForm.introduction" type="textarea" />
                         </el-form-item>
-                    </el-form>
 
-                    <el-form ref="userFormRef" :model="userForm" :rules="userFormRules" label-width="120px"
-                        class="demo-ruleForm">
                         <el-form-item label="头像" prop="avatar">
                           <Upload :avatar="userForm.avatar" @bookchange="handleChange"></Upload>
                         </el-form-item>
+
                         <el-form-item>
                             <el-button type="primary" @click="submitForm()">更新</el-button>
                         </el-form-item>

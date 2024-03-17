@@ -1,3 +1,4 @@
+<!-- 上传头像 -->
 <template>
     <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
         :show-file-list="false" :auto-upload="false" :on-change="handleChange">
