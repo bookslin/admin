@@ -30,6 +30,8 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import Upload from "@/components/upload/Upload"
+import upload from '@/util/upload';
+import { useRouter } from 'vue-router';
 const userFormRef = ref()
 const userForm = reactive({
     username: '',
@@ -37,7 +39,8 @@ const userForm = reactive({
     role: 2,//1管理员。2编辑
     introduction: '',
     avatar: '',
-    fileL: null
+    fileL: null,
+    gender:0//保密
 })
 
 const userFormRules = reactive({
@@ -67,11 +70,15 @@ const handleChange = file => {
     userForm.avatar = URL.createObjectURL(file);
     userForm.file = file;
 }
+const router = useRouter()
 const submitForm = ()=>{
-    userFormRef.value.validate((valid)=>{
+    userFormRef.value.validate(async(valid)=>{
         if(valid){
             //提交数据到后端
-            console.log(userForm)
+            // console.log(userForm)
+            await upload("/adminapi/user/add",userForm)
+            //跳转列表页面
+            router.push(`/user-manage/userlist`)
         }
     })
 }
