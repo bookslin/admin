@@ -1,15 +1,20 @@
 <template>
     <el-aside :width="$store.state.isCollapse ? '64px' : '200px'">
-        <el-menu  :collapse="$store.state.isCollapse" :collapse-transition="false" :router="true" :default-active="route.fullPath">
+        <el-menu :collapse="$store.state.isCollapse" :collapse-transition="false" :router="true"
+            :default-active="route.fullPath">
             <el-menu-item index="/index">
-                <el-icon><HomeFilled /></el-icon>
+                <el-icon>
+                    <HomeFilled />
+                </el-icon>
                 <span>首页</span>
             </el-menu-item>
             <el-menu-item index="/center">
-                <el-icon><Avatar /></el-icon>
+                <el-icon>
+                    <Avatar />
+                </el-icon>
                 <span>个人中心</span>
             </el-menu-item>
-            <el-sub-menu index="/user-manage">
+            <el-sub-menu index="/user-manage" v-admin>
                 <template #title>
                     <el-icon>
                         <UserFilled />
@@ -22,7 +27,7 @@
             <el-sub-menu index="/news-manage">
                 <template #title>
                     <el-icon>
-                        <MessageBox/>
+                        <MessageBox />
                     </el-icon>
                     <span>新闻管理</span>
                 </template>
@@ -53,16 +58,25 @@
     </el-aside>
 </template>
 <script setup>
-import {HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer} from "@element-plus/icons-vue"
+import { HomeFilled, Avatar, UserFilled, MessageBox, Reading, Pointer } from "@element-plus/icons-vue"
 import { useRoute } from "vue-router";
-const route =useRoute()
-
+import { useStore } from "vuex";
+const route = useRoute()
+const store = useStore()
+const vAdmin = {
+    mounted(el) {
+        // console.log(el);
+        if (store.state.userInfo.role !== 1) {
+            el.parentNode.removeChild(el)
+        }
+    },
+}
 </script>
 <style lang="scss" scoped>
 .el-aside {
     height: 100vh;
+
     .el-menu {
-       height: 100vh;
+        height: 100vh;
     }
-}
-</style>
+}</style>
