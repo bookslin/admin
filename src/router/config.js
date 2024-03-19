@@ -2,6 +2,7 @@ import Home from "../views/home/Home.vue"
 import Center from "../views/center/Center.vue"
 import NewsAdd from "../views/news-manage/NewsAdd.vue"
 import NewsList from "../views/news-manage/NewsList.vue"
+import NewsEdit from "../views/news-manage/NewsEdit.vue"
 import ProductAdd from "../views/product-manage/ProductAdd.vue"
 import ProductList from "../views/product-manage/ProductList.vue"
 import UserAdd from "../views/user-manage/UserAdd.vue"
@@ -24,6 +25,10 @@ const routes = [
     {
         path:"/news-manage/newslist",
         component:NewsList
+    },
+    {
+        path:"/news-manage/editnews/:id",
+        component:NewsEdit
     },
     {
         path:"/product-manage/addproduct",

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <el-page-header content="创建新闻" icon="" title="新闻管理" />
+        <el-page-header content="编辑新闻" @back="handleBack()" title="新闻管理" />
         <el-form ref="newsFormRef" :model="newsForm" :rules="newsFormRules" label-width="80px" class="demo-ruleForm">
             <el-form-item label="标题" prop="title">
                 <el-input v-model="newsForm.title" />
             </el-form-item>
 
             <el-form-item label="内容" prop="content">
-                <editor @event="editorChange" />
+                <editor @event="editorChange" :content="newsForm.content" v-if="showEditor"/>
             </el-form-item>
 
             <el-form-item label="类别" prop="category">
@@ -21,20 +21,23 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button type="primary" @click="submitForm()">添加新闻</el-button>
+                <el-button type="primary" @click="submitForm()">更新新闻</el-button>
             </el-form-item>
 
         </el-form>
     </div>
 </template>
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive ,onMounted} from 'vue';
 import editor from '@/components/editor/Editor'
 import Upload from "@/components/upload/Upload"
 import upload from '@/util/upload';
-import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { useRouter,useRoute } from 'vue-router';
 const router = useRouter()
+const route = useRoute()
 const newsFormRef = ref()
+const showEditor = ref(false)
 const newsForm = reactive({
     ttitle: '',
     content: '',
@@ -83,14 +86,29 @@ const editorChange = (data) => {
 const submitForm = () => {
     newsFormRef.value.validate(async(valid) => {
         if (valid) {
-            console.log(newsForm);
+            // console.log(newsForm);
             //后台通信
-            await upload("/adminapi/news/add",newsForm)
-            router.push(`/news-manage/newslist`)
+            await upload("/adminapi/news/list",newsForm)
+            router.back()
 
         }
     })
 }
+
+const handleBack = ()=>{
+    router.back()
+}
+//取当前id数据
+onMounted(async()=>{
+    // console.log(route.params.id);
+    const res= await axios.get(`/adminapi/news/list/${route.params.id}`)
+    // console.log(res.data.data[0]);
+    if (res.data.data.length > 0) {
+      Object.assign(newsForm, res.data.data[0]);
+      showEditor.value = true; 
+    }
+})
+
 </script>
 <style lang="scss" scoped>
 .el-form {
