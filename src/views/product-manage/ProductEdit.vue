@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-page-header content="添加产品" icon="" title="产品管理" />
+        <el-page-header content="编辑产品" @back="handleBack()" title="产品管理" />
     </div>
     <el-form ref="productFormRef" :model="productForm" :rules="productFormRules" label-width="80px" class="demo-ruleForm">
         <el-form-item label="产品名称" prop="title">
@@ -18,15 +18,19 @@
         </el-form-item>
 
         <el-form-item>
-            <el-button type="primary" @click="submitForm()">添加产品</el-button>
+            <el-button type="primary" @click="submitForm()">更新产品</el-button>
         </el-form-item>
     </el-form>
 </template>
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive,onMounted } from 'vue'
 import Upload from "@/components/upload/Upload"
 import upload from '@/util/upload';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
+import axios from 'axios';
+
+const router = useRouter()
+const route = useRoute()
 const productFormRef = ref()
 const productForm = reactive({
     title: '',
@@ -56,17 +60,29 @@ const handleChange = file => {
     productForm.cover = URL.createObjectURL(file);
     productForm.file = file;
 }
-const router = useRouter()
+
 const submitForm = ()=>{
     productFormRef.value.validate(async(valid)=>{
         if(valid){
             //提交数据到后端
-            console.log(productForm)
-            await upload("/adminapi/product/add",productForm)
+            // console.log(productForm)
+            await upload("/adminapi/product/list",productForm)
             //跳转列表页面
             router.push(`/product-manage/productlist`)
         }
     })
+}
+
+const handleBack = ()=>{
+    router.back()
+}
+onMounted(()=>{
+    getData()
+})
+const getData = async() =>{
+    const res =  await axios.get(`/adminapi/product/list/${route.params.id}`)
+    console.log(res.data.data[0]);
+    Object.assign(productForm,res.data.data[0])
 }
 </script>
 <style lang="scss" scoped>
