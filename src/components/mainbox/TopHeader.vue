@@ -7,14 +7,14 @@
                <span style="margin-left: 10px;">企业门户网站管理系统</span>
           </div>
           <div class="right">
-               <span>欢迎 {{ store.state.userInfo.username }} 回来</span>
+               <span>欢迎 {{ store.state.userInfo.username }} 登录</span>
                <el-dropdown>
                     <span class="el-dropdown-link">
                          <el-icon :size="25" color="wheat">
                               <User />
                          </el-icon>
                     </span>
-                    <template #dropdown>
+                    <template #dropdown>  
                          <el-dropdown-menu>
                               <el-dropdown-item @click="handleCenter"> 个人中心</el-dropdown-item>
                               <el-dropdown-item @click="handleLogout"> 退出</el-dropdown-item>

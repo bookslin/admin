@@ -19,5 +19,6 @@ import SideMenu from '@/components/mainbox/SideMenu.vue';
 .el-main{
     overflow: auto;
     height: calc(100vh - 60px);
+    background-color: rgb(243, 245, 246,0.5);
 }
 </style>

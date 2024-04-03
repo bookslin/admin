@@ -18,9 +18,9 @@
 
                 <el-table-column label="角色">
                     <template #default="scope">
-                        <!-- {{ scope.row.role===1?"管理员" : "编辑"  }} -->
+                        <!-- {{ scope.row.role===1?"管理员" : "用户"  }} -->
                         <el-tag v-if="scope.row.role === 1" type="danger">管理员</el-tag>
-                        <el-tag v-else type="success">编辑</el-tag>
+                        <el-tag v-else type="success">用户</el-tag>
                     </template>
                 </el-table-column>
 
@@ -75,7 +75,7 @@ const userFormRef = ref()
 let userForm = reactive({
     username: '',
     password: '',
-    role: 2,//1管理员。2编辑
+    role: 2,//1管理员。2用户
     introduction: ''
 })
 const userFormRules = reactive({
@@ -94,7 +94,7 @@ const userFormRules = reactive({
 })
 const options = [
     { label: "管理员", value: 1 },
-    { label: "编辑", value: 2 }
+    { label: "用户", value: 2 }
 ]
 const dialogVisible = ref(false)
 

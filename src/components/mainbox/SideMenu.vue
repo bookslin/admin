@@ -69,4 +69,5 @@ const vAdmin = {
     .el-menu {
         height: 100vh;
     }
-}</style>
+}
+</style>

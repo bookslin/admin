@@ -1,22 +1,21 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Login from "../views/Login.vue" 
+import Login from "../views/Login.vue"
 import MainBox from "../views/MainBox.vue"
 import RoutesConfig from './config'
 import store from '@/store'
 
 const routes = [
   {
-    path:"/login",
-    name:"login",
-    component:Login
+    path: "/login",
+    name: "login",
+    component: Login
   },
   {
-    path:"/mainbox",
-    name:'mainbox',
-    component:MainBox
+    path: "/mainbox",
+    name: 'mainbox',
+    component: MainBox
   }
   //mainbox的嵌套路由，后面根据权限动态添加
- 
 ]
 
 const router = createRouter({
@@ -25,54 +24,54 @@ const router = createRouter({
 })
 
 //每次路由跳转之前
-router.beforeEach((to,from,next) => {
-  if(to.name === "login") {
+router.beforeEach((to, from, next) => {
+  if (to.name === "login") {
     next()
-  }else{
+  } else {
     //如果授权，next()
     //未授权，重定向login
     if (!localStorage.getItem("token")) {
       next({
-        path:"/login"
+        path: "/login"
       })
-    }else{
+    } else {
       if (!store.state.isGetterRouter) {
         //删除所有的嵌套路由
         router.removeRoute("mainbox")
         ConfigRouter()
         next({
-          path:to.fullPath
+          path: to.fullPath
         })
-      }else{
+      } else {
         next()
       }
-     
     }
   }
 })
 
+
 const ConfigRouter = () => {
-  
-  if(!router.hasRoute("mainbox")){
+
+  if (!router.hasRoute("mainbox")) {
     router.addRoute({
-      path:"/mainbox",
-      name:'mainbox',
-      component:MainBox
+      path: "/mainbox",
+      name: 'mainbox',
+      component: MainBox
     })
   }
 
-  RoutesConfig.forEach(item =>{
-    checkPermission(item) && router.addRoute("mainbox",item)
+  RoutesConfig.forEach(item => {
+    checkPermission(item) && router.addRoute("mainbox", item)
   })
 
-//改变isGetterRouter = true
-store.commit("changeGetterRouter",true)
+  //改变isGetterRouter = true
+  store.commit("changeGetterRouter", true)
 
 }
 
-const checkPermission = (item)=>{
-  if(item.requireAdmin){
-    return store.state.userInfo.role===1
+const checkPermission = (item) => {
+  if (item.requireAdmin) {
+    return store.state.userInfo.role === 1
   }
   return true
 }

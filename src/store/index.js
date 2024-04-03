@@ -3,14 +3,14 @@ import createPersistedState from "vuex-persistedstate";//持久化插件
 
 export default createStore({
   state: {
-    isGetterRouter:false,
-    isCollapse:false,
-    userInfo:{}
+    isGetterRouter: false,
+    isCollapse: false,
+    userInfo: {}
   },
   getters: {
   },
   mutations: {
-    changeGetterRouter(state,value) {
+    changeGetterRouter(state, value) {
       state.isGetterRouter = value
     },
     //控制侧边栏展开
@@ -18,13 +18,13 @@ export default createStore({
       state.isCollapse = !state.isCollapse
     },
     //修改用户信息
-    changeUserInfo(state,value){
+    changeUserInfo(state, value) {
       state.userInfo = {
         ...state.userInfo,
         ...value
       }
     },
-    clearUserInfo(state,value){
+    clearUserInfo(state, value) {
       state.userInfo = {}
     }
   },
@@ -33,6 +33,6 @@ export default createStore({
   modules: {
   },
   plugins: [createPersistedState({
-    paths:["isCollapse","userInfo"] //控制是否持久化
+    paths: ["isCollapse", "userInfo"] //控制是否持久化
   })],
 })

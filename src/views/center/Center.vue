@@ -6,7 +6,7 @@
                 <el-card class="box-card">
                     <el-avatar :size="100" :src="avatarUrl" />
                     <h3>{{ store.state.userInfo.username }}</h3>
-                    <h5>{{ store.state.userInfo.role === 1 ? '管理员' : '编辑' }}</h5>
+                    <h5>{{ store.state.userInfo.role === 1 ? '管理员' : '用户' }}</h5>
                 </el-card>
             </el-col>
             <el-col :span="16">

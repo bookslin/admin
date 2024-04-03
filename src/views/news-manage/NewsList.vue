@@ -106,7 +106,7 @@ const handleDelete = async (item) => {
 }
 
 //编辑回调
-const handleEdit =  (item)=>{
+const handleEdit = (item) => {
     router.push(`/news-manage/editnews/${item._id}`)
 }
 

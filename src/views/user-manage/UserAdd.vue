@@ -36,7 +36,7 @@ const userFormRef = ref()
 const userForm = reactive({
     username: '',
     password: '',
-    role: 2,//1管理员。2编辑
+    role: 2,//1管理员。2用户
     introduction: '',
     avatar: '',
     fileL: null,
@@ -62,7 +62,7 @@ const userFormRules = reactive({
 })
 const options = [
     { label: "管理员", value: 1 },
-    { label: "编辑", value: 2 }
+    { label: "用户", value: 2 }
 ]
 
 //选择完图片后回调

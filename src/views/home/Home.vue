@@ -14,16 +14,16 @@
         <el-card class="box-card">
             <template #header>
                 <div class="card-header">
-                    <span>公司产品</span>
+                    <span>产品展示</span>
                 </div>
             </template>
-            <el-carousel v-if="loopList.length" :interval="4000" type="card" height="200px">
+            <el-carousel v-if="loopList.length" :interval="4000" type="card" height="300px">
                 <el-carousel-item v-for="item in  loopList " :key="item._id">
-                    <div :style="{ backgroundImage: `url(http://localhost:3000${item.cover})`,backgroundSize:'cover'}">
-                   <!-- <h3> {{ item.title }}</h3> -->
+                    <div :style="{ backgroundImage: `url(http://localhost:3000${item.cover})`, backgroundSize: 'cover' }">
+                        <!-- <h3> {{ item.title }}</h3> -->
                     </div>
                 </el-carousel-item>
-            </el-carousel> 
+            </el-carousel>
         </el-card>
     </div>
 </template>
@@ -55,7 +55,7 @@ const getData = async () => {
     const res = await axios.get(`/adminapi/product/list`)
     // console.log(res.data);
     loopList.value = res.data.data
-    console.log(loopList.value);
+    // console.log(loopList.value);
 }
 
 </script> 
@@ -64,13 +64,6 @@ const getData = async () => {
     margin-top: 50px;
 }
 
-// .el-carousel__item h3 {
-//     color: #010914f7;
-//     opacity: 0.75;
-//     line-height: 200px;
-//     margin: 0;
-//     text-align: center;
-// }
 .el-carousel__item div {
     height: 100%;
 }

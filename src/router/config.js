@@ -12,55 +12,55 @@ import NotFound from "../views/not-found/NotFound.vue"
 
 const routes = [
     {
-        path:"/index",
-        component:Home
+        path: "/index",
+        component: Home
     },
     {
-        path:"/center",
-       component:Center
+        path: "/center",
+        component: Center
     },
     {
-        path:"/news-manage/addnews",
-        component:NewsAdd
+        path: "/news-manage/addnews",
+        component: NewsAdd
     },
     {
-        path:"/news-manage/newslist",
-        component:NewsList
+        path: "/news-manage/newslist",
+        component: NewsList
     },
     {
-        path:"/news-manage/editnews/:id",
-        component:NewsEdit
+        path: "/news-manage/editnews/:id",
+        component: NewsEdit
     },
     {
-        path:"/product-manage/addproduct",
-        component:ProductAdd
+        path: "/product-manage/addproduct",
+        component: ProductAdd
     },
     {
-        path:"/product-manage/productlist",
-        component:ProductList
+        path: "/product-manage/productlist",
+        component: ProductList
     },
     {
-        path:"/product-manage/editproduct/:id",
-        component:ProductEdit
+        path: "/product-manage/editproduct/:id",
+        component: ProductEdit
     },
     {
-        path:"/user-manage/adduser",
-        component:UserAdd,
-        requireAdmin:true
+        path: "/user-manage/adduser",
+        component: UserAdd,
+        requireAdmin: true
     },
     {
-        path:"/user-manage/userlist",
-        component:UserList,
-        requireAdmin:true
+        path: "/user-manage/userlist",
+        component: UserList,
+        requireAdmin: true
     },
     {
-        path:"/",
-        redirect:"index"
+        path: "/",
+        redirect: "index"
     },
     {
-        path:"/:pathMathch(.*)*",
-        name:"Notfound",
-        component:NotFound
+        path: "/:pathMathch(.*)*",
+        name: "Notfound",
+        component: NotFound
     }
 
 ]
